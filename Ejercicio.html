@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Programa de Resolución de Problemas Matemáticos</title>
+    <style>
+        body {
+            background-color: pink;
+        }
+        label, input, button {
+            display: block;
+            margin-bottom: 10px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Programa de Resolución de Problemas Matemáticos</h1>
+
+    <label for="problema" id="problemaLabel">Problema:</label>
+    <input type="text" id="problema" readonly="readonly" size="50">
+
+    <label for="respuesta" id="respuestaLabel">Respuesta:</label>
+    <input type="text" id="respuesta" size="50">
+
+    <button id="verificar">Verificar</button>
+    <button id="salir">Salir</button>
+
+    <script>
+        function generarProblema() {
+            const operadores = ['+', '-', '*', '/'];
+            const operador = operadores[Math.floor(Math.random() * operadores.length)];
+
+            let problema;
+            if (operador === '/') {
+                const divisor = Math.floor(Math.random() * 10) + 1;
+                const dividend = (Math.floor(Math.random() * 10) + 1) * divisor;
+                problema = `${dividend} ${operador} ${divisor}`;
+            } else {
+                const num1 = Math.floor(Math.random() * 100) + 1;
+                const num2 = Math.floor(Math.random() * 100) + 1;
+                problema = `${num1} ${operador} ${num2}`;
+            }
+
+            document.getElementById('problema').value = problema;
+        }
+
+        function verificarRespuesta() {
+            const respuestaUsuario = document.getElementById('respuesta').value;
+            const problema = document.getElementById('problema').value;
+
+            try {
+                if (respuestaUsuario.toLowerCase() === 'salir') {
+                    window.close();
+                } else {
+                    const resultadoCorrecto = eval(problema);
+                    if (resultadoCorrecto.toString() === respuestaUsuario) {
+                        alert('¡Respuesta correcta!');
+                    } else {
+                        alert(`Respuesta incorrecta. La respuesta correcta es: ${resultadoCorrecto}`);
+                    }
+                }
+            } catch (error) {
+                alert(`Ha ocurrido un error: ${error}`);
+            }
+        }
+
+        document.getElementById('verificar').addEventListener('click', verificarRespuesta);
+        document.getElementById('salir').addEventListener('click', () => window.close());
+
+        generarProblema(); // Generar el primer problema al cargar la página
+    </script>
+</body>
+</html>
